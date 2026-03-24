@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Surprise for You!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center; background: #1a1a2e; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; overflow: hidden; }
+        #gift-container { text-align: center; cursor: pointer; transition: transform 0.3s ease; }
+        #gift-container:hover { transform: scale(1.1); }
+        #gift-icon { font-size: 80px; }
+        #message-area { display: none; text-align: center; padding: 20px; }
+        h1 { color: #ff0075; font-size: 3rem; margin-bottom: 10px; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div id="gift-container" onclick="openGift()">
+        <div id="gift-icon">🎁</div>
+        <p>Click to open your surprise!</p>
+    </div>
+
+    <div id="message-area">
+        <h1>Happy Birthday! 🎂</h1>
+        <p>You aren't just getting older, you're getting better.<br> 
+        Thanks for being an incredible friend. Here's to a year of big wins!</p>
+    </div>
+
+    <script>
+        function openGift() {
+            // Hide the gift
+            document.getElementById('gift-container').style.display = 'none';
+            // Show the message
+            document.getElementById('message-area').style.display = 'block';
+            
+            // Trigger Confetti!
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
